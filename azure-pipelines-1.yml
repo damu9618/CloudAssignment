@@ -1,0 +1,38 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    vmImage: windows-2019
+  steps:
+  - checkout: self
+  
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: 'ARM Template deployment: Resource Group scope'
+    inputs:
+      deploymentScope: 'Resource Group'
+      azureResourceManagerConnection: 'Azure Pass - Sponsorship(f53c0d5f-0836-42c5-a842-7badfadc0f40)'
+      subscriptionId: 'f53c0d5f-0836-42c5-a842-7badfadc0f40'
+      action: 'Create Or Update Resource Group'
+      resourceGroupName: 'DamuRG'
+      location: 'Central US'
+      templateLocation: 'URL of the file'
+      csmFileLink: 'https://damustatorage1234.blob.core.windows.net/damuscripts/azuredeploy.json'
+      csmParametersFileLink: 'https://damustatorage1234.blob.core.windows.net/damuscripts/parameters.json'
+      deploymentMode: 'Incremental'
+  
+ 
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'Azure Pass - Sponsorship(f53c0d5f-0836-42c5-a842-7badfadc0f40)'
+      scriptType: 'batch'
+      scriptLocation: 'inlineScript'
+      inlineScript: 'az webapp create -g devopsRG -p SampleAppServicePlan -n damunewappdevops1'
+

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "svcPlanName": {
+      "value": "DamuAppServicePlan1"
+    },
+    "sku": {
+      "value": "Standard"
+    },
+    "svcPlanSize": {
+      "value": "S1"
+    },
+    "minimumCapacity": {
+      "value": 2
+    },
+    "maximumCapacity": {
+      "value": 5
+    },
+    "defaultCapacity": {
+      "value": 5
+    },
+    "metricName": {
+      "value": "CpuPercentage"
+    },
+    "metricThresholdToScaleOut": {
+      "value": 60
+    },
+    "metricThresholdToScaleIn": {
+      "value": 20
+    },
+    "changePercentScaleOut": {
+      "value": 20
+    },
+    "changePercentScaleIn": {
+      "value": 10
+    },
+    "autoscaleEnabled": {
+      "value": true
+    },
+    "location": {
+      "value": "[resourceGroup().location]"
+    }
+  }
+}
